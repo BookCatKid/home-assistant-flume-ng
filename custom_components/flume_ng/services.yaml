@@ -1,0 +1,634 @@
+list_notifications:
+  fields:
+    config_entry:
+      required: true
+      selector:
+        config_entry:
+          integration: flume_ng
+
+list_usage_alert_rules:
+  fields:
+    config_entry:
+      required: true
+      selector:
+        config_entry:
+          integration: flume_ng
+    device:
+      selector:
+        device:
+          integration: flume_ng
+
+create_usage_alert_rule:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    name:
+      required: true
+      selector:
+        text:
+          type: text
+    flow_rate:
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 40.9
+          step: 0.1
+          unit_of_measurement: gal/min
+          mode: box
+    duration:
+      required: true
+      selector:
+        number:
+          min: 5
+          max: 1439
+          step: 1
+          unit_of_measurement: min
+          mode: box
+    notify_every:
+      selector:
+        number:
+          min: 10
+          max: 20100
+          step: 1
+          unit_of_measurement: min
+          mode: box
+    active:
+      default: true
+      selector:
+        boolean:
+    payload:
+      selector:
+        object:
+
+update_usage_alert_rule:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    rule_id:
+      required: true
+      selector:
+        text:
+    name:
+      selector:
+        text:
+          type: text
+    flow_rate:
+      selector:
+        number:
+          min: 0
+          max: 40.9
+          step: 0.1
+          unit_of_measurement: gal/min
+          mode: box
+    duration:
+      selector:
+        number:
+          min: 5
+          max: 1439
+          step: 1
+          unit_of_measurement: min
+          mode: box
+    notify_every:
+      selector:
+        number:
+          min: 10
+          max: 20100
+          step: 1
+          unit_of_measurement: min
+          mode: box
+    active:
+      selector:
+        boolean:
+    payload:
+      selector:
+        object:
+
+delete_usage_alert_rule:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    rule_id:
+      required: true
+      selector:
+        text:
+
+set_usage_alert_rule_active:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    rule_id:
+      required: true
+      selector:
+        text:
+    active:
+      required: true
+      selector:
+        boolean:
+
+list_usage_alert_history:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+
+list_do_not_alert_schedules:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+
+create_do_not_alert_schedule:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    name:
+      required: true
+      selector:
+        text:
+          type: text
+    description:
+      selector:
+        text:
+    weekdays:
+      required: true
+      selector:
+        select:
+          multiple: true
+          mode: dropdown
+          options:
+            - label: Sunday
+              value: SU
+            - label: Monday
+              value: MO
+            - label: Tuesday
+              value: TU
+            - label: Wednesday
+              value: WE
+            - label: Thursday
+              value: TH
+            - label: Friday
+              value: FR
+            - label: Saturday
+              value: SA
+    start_time:
+      required: true
+      selector:
+        time:
+    end_time:
+      required: true
+      selector:
+        time:
+    interval:
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 10
+          step: 1
+          mode: box
+    span_types:
+      selector:
+        text:
+          multiple: true
+    payload:
+      selector:
+        object:
+
+update_do_not_alert_schedule:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    schedule_id:
+      required: true
+      selector:
+        text:
+    name:
+      selector:
+        text:
+          type: text
+    description:
+      selector:
+        text:
+    weekdays:
+      selector:
+        select:
+          multiple: true
+          mode: dropdown
+          options:
+            - label: Sunday
+              value: SU
+            - label: Monday
+              value: MO
+            - label: Tuesday
+              value: TU
+            - label: Wednesday
+              value: WE
+            - label: Thursday
+              value: TH
+            - label: Friday
+              value: FR
+            - label: Saturday
+              value: SA
+    start_time:
+      selector:
+        time:
+    end_time:
+      selector:
+        time:
+    interval:
+      selector:
+        number:
+          min: 1
+          max: 10
+          step: 1
+          mode: box
+    span_types:
+      selector:
+        text:
+          multiple: true
+    payload:
+      selector:
+        object:
+
+delete_do_not_alert_schedule:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    schedule_id:
+      required: true
+      selector:
+        text:
+
+get_usage_breakdown:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    since_datetime:
+      example: "2026-09-01 00:00:00"
+      selector:
+        text:
+    until_datetime:
+      example: "2026-09-06 23:59:59"
+      selector:
+        text:
+
+list_budgets:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+
+create_budget:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    type:
+      required: true
+      selector:
+        select:
+          options:
+            - DAILY
+            - WEEKLY
+            - MONTHLY
+    value:
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 1000000000
+          step: 1
+          unit_of_measurement: gal
+          mode: box
+    threshold_percentages:
+      default:
+        - "75"
+      selector:
+        text:
+          type: number
+          multiple: true
+          suffix: "%"
+    payload:
+      selector:
+        object:
+
+update_budget:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    budget_id:
+      required: true
+      selector:
+        text:
+    value:
+      selector:
+        number:
+          min: 1
+          max: 1000000000
+          step: 1
+          unit_of_measurement: gal
+          mode: box
+    threshold_percentages:
+      selector:
+        text:
+          type: number
+          multiple: true
+          suffix: "%"
+    payload:
+      selector:
+        object:
+
+delete_budget:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    budget_id:
+      required: true
+      selector:
+        text:
+
+get_notification_preferences:
+  fields:
+    config_entry:
+      required: true
+      selector:
+        config_entry:
+          integration: flume_ng
+
+update_notification_preferences:
+  fields:
+    config_entry:
+      required: true
+      selector:
+        config_entry:
+          integration: flume_ng
+    subscription_id:
+      required: true
+      selector:
+        text:
+    preference:
+      required: true
+      selector:
+        select:
+          options:
+            - label: Usage alerts
+              value: USAGE_ALERT
+            - label: Budget
+              value: BUDGET
+            - label: General
+              value: GENERAL
+            - label: Connection
+              value: CONNECTION
+            - label: Battery
+              value: BATTERY
+            - label: Device moved
+              value: DEVICE_MOVED
+    enabled:
+      required: true
+      selector:
+        boolean:
+
+list_usage_spans:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    since_datetime:
+      selector:
+        text:
+    until_datetime:
+      selector:
+        text:
+
+relabel_span:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    span_id:
+      required: true
+      selector:
+        text:
+    span_type:
+      required: true
+      selector:
+        text:
+
+list_location_access:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+
+grant_location_access:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    email_address:
+      required: true
+      selector:
+        text:
+          type: email
+          autocomplete: email
+
+revoke_location_access:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    access_id:
+      required: true
+      selector:
+        text:
+
+list_subscriptions:
+  fields:
+    config_entry:
+      required: true
+      selector:
+        config_entry:
+          integration: flume_ng
+
+list_emergency_contacts:
+  fields:
+    config_entry:
+      required: true
+      selector:
+        config_entry:
+          integration: flume_ng
+
+create_emergency_contact:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+    contact_name:
+      required: true
+      selector:
+        text:
+    email_address:
+      required: true
+      selector:
+        text:
+          type: email
+          autocomplete: email
+
+update_emergency_contact:
+  fields:
+    config_entry:
+      required: true
+      selector:
+        config_entry:
+          integration: flume_ng
+    subscription_id:
+      required: true
+      selector:
+        text:
+    contact_name:
+      selector:
+        text:
+    email_address:
+      selector:
+        text:
+          type: email
+          autocomplete: email
+
+delete_emergency_contact:
+  fields:
+    config_entry:
+      required: true
+      selector:
+        config_entry:
+          integration: flume_ng
+    subscription_id:
+      required: true
+      selector:
+        text:
+
+get_meter_accuracy:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+
+check_meter_accuracy:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+
+get_location_diagnostics:
+  fields:
+    device:
+      required: true
+      selector:
+        device:
+          integration: flume_ng
+
+set_notification_read:
+  fields:
+    config_entry:
+      required: true
+      selector:
+        config_entry:
+          integration: flume_ng
+    notification_id:
+      required: true
+      selector:
+        text:
+    read:
+      required: true
+      default: true
+      selector:
+        boolean:
+
+delete_notification:
+  fields:
+    config_entry:
+      required: true
+      selector:
+        config_entry:
+          integration: flume_ng
+    notification_id:
+      required: true
+      selector:
+        text:
+
+list_api_methods:
+  fields:
+    config_entry:
+      required: true
+      selector:
+        config_entry:
+          integration: flume_ng
+
+call_api:
+  fields:
+    config_entry:
+      required: true
+      selector:
+        config_entry:
+          integration: flume_ng
+    method:
+      required: true
+      selector:
+        text:
+    arguments:
+      selector:
+        object:

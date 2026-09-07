@@ -1,0 +1,19 @@
+{
+  "domain": "flume_ng",
+  "name": "Flume NG",
+  "codeowners": [
+    "@BookCatKid"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/BookCatKid/home-assistant-flume-ng#readme",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/BookCatKid/home-assistant-flume-ng/issues",
+  "loggers": [
+    "pyflumeng"
+  ],
+  "requirements": [
+    "PyFlumeNG==0.12.0"
+  ],
+  "version": "0.12.0"
+}

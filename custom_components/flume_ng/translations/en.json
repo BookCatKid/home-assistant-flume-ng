@@ -1,0 +1,740 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Account is already configured",
+            "reauth_successful": "Re-authentication was successful"
+        },
+        "error": {
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Invalid authentication",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "personal": {
+                "data": {
+                    "client_id": "Client ID",
+                    "client_secret": "Client secret",
+                    "password": "Password",
+                    "username": "Username"
+                },
+                "description": "Personal API authentication uses Flume's official Personal API credentials from {api_url}. It supports Personal API reads, including notifications, but portal-only write operations require Portal authentication.",
+                "title": "Sign in with the Personal API"
+            },
+            "portal": {
+                "data": {
+                    "password": "Password",
+                    "username": "Username"
+                },
+                "description": "Portal authentication uses the same customer-portal OAuth flow as Flume's web app. It supports normal Flume reads plus portal features and writes such as usage-alert rules, schedules, spans, integrations, budgets, subscriptions, and meter-accuracy tools. Notifications work with this method too.",
+                "title": "Sign in with the Flume portal"
+            },
+            "reauth_confirm": {
+                "data": {
+                    "client_id": "Client ID",
+                    "client_secret": "Client secret",
+                    "password": "Password"
+                },
+                "description": "The credentials for {username} are no longer valid.",
+                "title": "Reauthenticate your Flume account"
+            },
+            "user": {
+                "data": {
+                    "auth_type": "Authentication method"
+                },
+                "description": "Choose how Home Assistant should connect to Flume. Portal authentication is recommended because it supports the full PyFlumeNG feature set. Personal API authentication remains available for existing API clients.",
+                "title": "Connect to your Flume account"
+            }
+        }
+    },
+    "entity": {
+        "binary_sensor": {
+            "do_not_alert_schedule_active": {
+                "name": "Do-not-alert schedule active"
+            },
+            "flow": {
+                "name": "High flow"
+            },
+            "leak": {
+                "name": "Leak detected"
+            }
+        },
+        "event": {
+            "notification_event": {
+                "name": "Notification"
+            }
+        },
+        "sensor": {
+            "budget_percentage": {
+                "name": "Budget used percentage"
+            },
+            "budget_remaining": {
+                "name": "Budget remaining"
+            },
+            "budget_target": {
+                "name": "Budget target"
+            },
+            "budget_usage": {
+                "name": "Budget usage"
+            },
+            "current_interval": {
+                "name": "Current"
+            },
+            "last_24_hrs": {
+                "name": "24 hours"
+            },
+            "last_30_days": {
+                "name": "30 days"
+            },
+            "last_60_min": {
+                "name": "60 minutes"
+            },
+            "live_current_flow": {
+                "name": "Live current flow"
+            },
+            "month_to_date": {
+                "name": "Current month"
+            },
+            "rate_limit_remaining": {
+                "name": "API requests remaining"
+            },
+            "today": {
+                "name": "Current day"
+            },
+            "unread_notifications": {
+                "name": "Unread notifications"
+            },
+            "usage_breakdown_total": {
+                "name": "Usage breakdown total"
+            },
+            "week_to_date": {
+                "name": "Current week"
+            }
+        },
+        "switch": {
+            "away_mode": {
+                "name": "Away mode"
+            }
+        },
+        "valve": {
+            "shutoff_valve": {
+                "name": "Shutoff valve"
+            }
+        }
+    },
+    "services": {
+        "call_api": {
+            "description": "Expert escape hatch for allowlisted read-only PyFlumeNG get/list methods. Writes, raw requests, credential-bearing reads, commerce, and support side effects are blocked; sensitive response fields are redacted. Prefer the first-class Flume actions above.",
+            "fields": {
+                "arguments": {
+                    "description": "Keyword arguments for the selected read-only method, as an object.",
+                    "name": "Arguments"
+                },
+                "config_entry": {
+                    "description": "The Flume config entry to use.",
+                    "name": "Flume account"
+                },
+                "method": {
+                    "description": "An allowlisted PyFlumeNG get/list method. Use List expert read-only API methods to discover available methods.",
+                    "name": "Read-only method"
+                }
+            },
+            "name": "Expert: call read-only PyFlumeNG API"
+        },
+        "check_meter_accuracy": {
+            "description": "Runs the safe read-only meter-accuracy precheck for the selected water sensor. It does not upload readings or photos and does not start a support conversation.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                }
+            },
+            "name": "Check meter accuracy"
+        },
+        "create_budget": {
+            "description": "Creates a DAILY, WEEKLY, or MONTHLY Flume water budget. Percentage thresholds entered here are converted to Flume's absolute-gallon thresholds.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "payload": {
+                    "description": "Optional raw compatibility payload. Prefer the typed fields in this action.",
+                    "name": "Legacy payload"
+                },
+                "threshold_percentages": {
+                    "description": "One or more percentages of the target at which to alert. Home Assistant converts these to the absolute-gallon thresholds used by Flume.",
+                    "name": "Alert thresholds (%)"
+                },
+                "type": {
+                    "description": "Budget recurrence: DAILY, WEEKLY, or MONTHLY.",
+                    "name": "Budget period"
+                },
+                "value": {
+                    "description": "Water-usage target in gallons.",
+                    "name": "Target gallons"
+                }
+            },
+            "name": "Create water budget"
+        },
+        "create_do_not_alert_schedule": {
+            "description": "Creates a weekly period during which matching Flume alerts are suppressed. Portal authentication is required. End time must be at least four minutes after start time.",
+            "fields": {
+                "description": {
+                    "description": "Optional description for the do-not-alert schedule.",
+                    "name": "Description"
+                },
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "end_time": {
+                    "description": "Local end time. It must be at least four minutes after the start time.",
+                    "name": "End time"
+                },
+                "interval": {
+                    "description": "Repeat every 1 through 10 weeks.",
+                    "name": "Weekly interval"
+                },
+                "name": {
+                    "description": "A readable name from 1 to 32 characters.",
+                    "name": "Name"
+                },
+                "payload": {
+                    "description": "Optional raw compatibility payload. Prefer the typed fields in this action.",
+                    "name": "Legacy payload"
+                },
+                "span_types": {
+                    "description": "Optional usage classifications to which the schedule applies. Leave empty to omit this field.",
+                    "name": "Span types"
+                },
+                "start_time": {
+                    "description": "Local start time for suppressing alerts.",
+                    "name": "Start time"
+                },
+                "weekdays": {
+                    "description": "Days of the week on which this schedule repeats.",
+                    "name": "Weekdays"
+                }
+            },
+            "name": "Create do-not-alert schedule"
+        },
+        "create_emergency_contact": {
+            "description": "Creates an emergency contact for the selected Flume location using the same name-and-email flow as the Flume portal. The contact may receive emergency water alerts.",
+            "fields": {
+                "contact_name": {
+                    "description": "Name shown for the emergency contact.",
+                    "name": "Contact name"
+                },
+                "device": {
+                    "description": "The Flume water sensor whose location should receive the emergency contact.",
+                    "name": "Water sensor"
+                },
+                "email_address": {
+                    "description": "Email address that should receive emergency alerts.",
+                    "name": "Email address"
+                }
+            },
+            "name": "Create emergency contact"
+        },
+        "create_usage_alert_rule": {
+            "description": "Creates a normal Flume usage-alert rule using typed fields. Portal authentication is required. Smart Leak (advanced low-flow) rules are managed separately by Flume; the legacy payload field is only for compatibility.",
+            "fields": {
+                "active": {
+                    "description": "Whether the usage-alert rule is enabled.",
+                    "name": "Active"
+                },
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "duration": {
+                    "description": "How many minutes the flow must continue before the rule triggers, from 5 through 1439 minutes.",
+                    "name": "Duration"
+                },
+                "flow_rate": {
+                    "description": "Flow-rate threshold in gallons per minute, from 0 through 40.9.",
+                    "name": "Flow rate"
+                },
+                "name": {
+                    "description": "A readable name from 1 to 32 characters.",
+                    "name": "Name"
+                },
+                "notify_every": {
+                    "description": "Minutes between repeat notifications. Flume requires this to be at least twice the rule duration. If omitted when creating a rule, Home Assistant uses twice the duration automatically.",
+                    "name": "Notify every"
+                },
+                "payload": {
+                    "description": "Optional raw compatibility payload. Prefer the typed fields in this action.",
+                    "name": "Legacy payload"
+                }
+            },
+            "name": "Create usage-alert rule"
+        },
+        "delete_budget": {
+            "description": "Permanently deletes the selected water budget. This cannot be undone and its budget alerts will stop.",
+            "fields": {
+                "budget_id": {
+                    "description": "The budget ID returned by List water budgets.",
+                    "name": "Budget ID"
+                },
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                }
+            },
+            "name": "Delete water budget"
+        },
+        "delete_do_not_alert_schedule": {
+            "description": "Permanently deletes the selected do-not-alert schedule. This cannot be undone; alerts that the schedule suppressed may resume.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "schedule_id": {
+                    "description": "The do-not-alert schedule ID returned by List do-not-alert schedules.",
+                    "name": "Schedule ID"
+                }
+            },
+            "name": "Delete do-not-alert schedule"
+        },
+        "delete_emergency_contact": {
+            "description": "Permanently deletes the selected emergency-contact subscription. This cannot be undone and that contact will stop receiving emergency alerts.",
+            "fields": {
+                "config_entry": {
+                    "description": "The Flume config entry to use.",
+                    "name": "Flume account"
+                },
+                "subscription_id": {
+                    "description": "The notification subscription ID returned by Get notification preferences or the corresponding list action.",
+                    "name": "Subscription ID"
+                }
+            },
+            "name": "Delete emergency contact"
+        },
+        "delete_notification": {
+            "description": "Permanently deletes the selected Flume notification. This cannot be undone.",
+            "fields": {
+                "config_entry": {
+                    "description": "The Flume config entry to use.",
+                    "name": "Flume account"
+                },
+                "notification_id": {
+                    "description": "The notification ID returned by List notifications.",
+                    "name": "Notification ID"
+                }
+            },
+            "name": "Delete notification"
+        },
+        "delete_usage_alert_rule": {
+            "description": "Permanently deletes the selected usage-alert rule. This cannot be undone and may stop expected water-usage or leak notifications.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "rule_id": {
+                    "description": "The usage-alert rule ID returned by List usage-alert rules.",
+                    "name": "Rule ID"
+                }
+            },
+            "name": "Delete usage-alert rule"
+        },
+        "get_location_diagnostics": {
+            "description": "Returns read-only Flume location and profile diagnostics useful for troubleshooting. It does not change the location profile.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                }
+            },
+            "name": "Get location diagnostics"
+        },
+        "get_meter_accuracy": {
+            "description": "Returns Flume meter-accuracy diagnostic results for the selected water sensor. This action is read-only and does not upload meter photos or contact support.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                }
+            },
+            "name": "Get meter accuracy"
+        },
+        "get_notification_preferences": {
+            "description": "Returns ordinary notification channels and their notification preference masks with sensitive destination details redacted. This action is read-only.",
+            "fields": {
+                "config_entry": {
+                    "description": "The Flume config entry to use.",
+                    "name": "Flume account"
+                }
+            },
+            "name": "Get notification preferences"
+        },
+        "get_usage_breakdown": {
+            "description": "Returns Flume usage categories and percentages for the selected water sensor. With no dates, the current month to date is returned. This action is read-only.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "since_datetime": {
+                    "description": "Optional range start in Flume portal format (YYYY-MM-DD HH:MM:SS). Supply both start and end or neither.",
+                    "name": "Start"
+                },
+                "until_datetime": {
+                    "description": "Optional range end in Flume portal format (YYYY-MM-DD HH:MM:SS). Supply both start and end or neither.",
+                    "name": "End"
+                }
+            },
+            "name": "Get usage breakdown"
+        },
+        "grant_location_access": {
+            "description": "Grants another person access to the selected Flume location by email address. This is a security-sensitive account change; only grant access to people you trust.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "email_address": {
+                    "description": "Email address of the person to grant access to.",
+                    "name": "Email address"
+                }
+            },
+            "name": "Grant shared location access"
+        },
+        "list_api_methods": {
+            "description": "Lists the hardened PyFlumeNG methods that are permitted through the expert API action. Credential-bearing and write methods are excluded.",
+            "fields": {
+                "config_entry": {
+                    "description": "The Flume config entry to use.",
+                    "name": "Flume account"
+                }
+            },
+            "name": "List expert read-only API methods"
+        },
+        "list_budgets": {
+            "description": "Returns the daily, weekly, and monthly water budgets for the selected sensor. This action is read-only.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                }
+            },
+            "name": "List water budgets"
+        },
+        "list_do_not_alert_schedules": {
+            "description": "Returns the do-not-alert schedules configured for the selected Flume water sensor. This action is read-only.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                }
+            },
+            "name": "List do-not-alert schedules"
+        },
+        "list_emergency_contacts": {
+            "description": "Returns emergency-contact subscriptions with destination details redacted. This action is read-only.",
+            "fields": {
+                "config_entry": {
+                    "description": "The Flume config entry to use.",
+                    "name": "Flume account"
+                }
+            },
+            "name": "List emergency contacts"
+        },
+        "list_location_access": {
+            "description": "Returns users who have been granted access to the selected Flume location. This action is read-only.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                }
+            },
+            "name": "List shared location access"
+        },
+        "list_notifications": {
+            "description": "Returns the latest Flume notifications already fetched by the integration. This action is read-only.",
+            "fields": {
+                "config_entry": {
+                    "description": "The Flume config entry to use.",
+                    "name": "Flume account"
+                }
+            },
+            "name": "List notifications"
+        },
+        "list_subscriptions": {
+            "description": "Returns a redacted summary of notification subscriptions. Sensitive email addresses and device tokens are not exposed. This action is read-only.",
+            "fields": {
+                "config_entry": {
+                    "description": "The Flume config entry to use.",
+                    "name": "Flume account"
+                }
+            },
+            "name": "List notification subscriptions"
+        },
+        "list_usage_alert_history": {
+            "description": "Returns structured history of triggered usage alerts for the selected water sensor. This action is read-only.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                }
+            },
+            "name": "List usage-alert history"
+        },
+        "list_usage_alert_rules": {
+            "description": "Returns usage-alert rules for one Flume water sensor or every sensor in the selected account. This action is read-only.",
+            "fields": {
+                "config_entry": {
+                    "description": "The Flume config entry to use.",
+                    "name": "Flume account"
+                },
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                }
+            },
+            "name": "List usage-alert rules"
+        },
+        "list_usage_spans": {
+            "description": "Returns Flume's classified water-use spans and the categories that can be used to relabel them. This makes span IDs and valid category names available without using the expert API action.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "since_datetime": {
+                    "description": "Optional range start in Flume portal format (YYYY-MM-DD HH:MM:SS). Supply both start and end or neither.",
+                    "name": "Start"
+                },
+                "until_datetime": {
+                    "description": "Optional range end in Flume portal format (YYYY-MM-DD HH:MM:SS). Supply both start and end or neither.",
+                    "name": "End"
+                }
+            },
+            "name": "List usage spans"
+        },
+        "relabel_span": {
+            "description": "Changes the Flume classification of one usage span. This alters historical usage categorization and breakdowns; it can be changed again later.",
+            "fields": {
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "span_id": {
+                    "description": "The usage span ID to relabel.",
+                    "name": "Span ID"
+                },
+                "span_type": {
+                    "description": "The Flume span classification to apply. The action validates it against editable types reported by Flume.",
+                    "name": "Usage category"
+                }
+            },
+            "name": "Relabel usage span"
+        },
+        "revoke_location_access": {
+            "description": "Immediately revokes an existing shared-location access grant. The person will lose access until a new grant is created.",
+            "fields": {
+                "access_id": {
+                    "description": "The shared-location access grant ID to revoke.",
+                    "name": "Access ID"
+                },
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                }
+            },
+            "name": "Revoke shared location access"
+        },
+        "set_notification_read": {
+            "description": "Marks one Flume notification as read or unread and refreshes notification data.",
+            "fields": {
+                "config_entry": {
+                    "description": "The Flume config entry to use.",
+                    "name": "Flume account"
+                },
+                "notification_id": {
+                    "description": "The notification ID returned by List notifications.",
+                    "name": "Notification ID"
+                },
+                "read": {
+                    "description": "Whether the notification should be marked as read.",
+                    "name": "Read"
+                }
+            },
+            "name": "Set notification read state"
+        },
+        "set_usage_alert_rule_active": {
+            "description": "Enables or disables a usage-alert rule without deleting it. Disabling a rule stops alerts from that rule until it is enabled again.",
+            "fields": {
+                "active": {
+                    "description": "Whether the usage-alert rule is enabled.",
+                    "name": "Active"
+                },
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "rule_id": {
+                    "description": "The usage-alert rule ID returned by List usage-alert rules.",
+                    "name": "Rule ID"
+                }
+            },
+            "name": "Set usage-alert rule state"
+        },
+        "update_budget": {
+            "description": "Updates the target and alert thresholds of an existing Flume water budget. Percentage thresholds entered here are converted to absolute gallons.",
+            "fields": {
+                "budget_id": {
+                    "description": "The budget ID returned by List water budgets.",
+                    "name": "Budget ID"
+                },
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "payload": {
+                    "description": "Optional raw compatibility payload. Prefer the typed fields in this action.",
+                    "name": "Legacy payload"
+                },
+                "threshold_percentages": {
+                    "description": "One or more percentages of the target at which to alert. Home Assistant converts these to the absolute-gallon thresholds used by Flume.",
+                    "name": "Alert thresholds (%)"
+                },
+                "value": {
+                    "description": "Water-usage target in gallons.",
+                    "name": "Target gallons"
+                }
+            },
+            "name": "Update water budget"
+        },
+        "update_do_not_alert_schedule": {
+            "description": "Updates a do-not-alert schedule. Portal authentication is required. Changes can immediately alter when Flume suppresses alerts.",
+            "fields": {
+                "description": {
+                    "description": "Optional description for the do-not-alert schedule.",
+                    "name": "Description"
+                },
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "end_time": {
+                    "description": "Local end time. It must be at least four minutes after the start time.",
+                    "name": "End time"
+                },
+                "interval": {
+                    "description": "Repeat every 1 through 10 weeks.",
+                    "name": "Weekly interval"
+                },
+                "name": {
+                    "description": "A readable name from 1 to 32 characters.",
+                    "name": "Name"
+                },
+                "payload": {
+                    "description": "Optional raw compatibility payload. Prefer the typed fields in this action.",
+                    "name": "Legacy payload"
+                },
+                "schedule_id": {
+                    "description": "The do-not-alert schedule ID returned by List do-not-alert schedules.",
+                    "name": "Schedule ID"
+                },
+                "span_types": {
+                    "description": "Optional usage classifications to which the schedule applies. Leave empty to omit this field.",
+                    "name": "Span types"
+                },
+                "start_time": {
+                    "description": "Local start time for suppressing alerts.",
+                    "name": "Start time"
+                },
+                "weekdays": {
+                    "description": "Days of the week on which this schedule repeats.",
+                    "name": "Weekdays"
+                }
+            },
+            "name": "Update do-not-alert schedule"
+        },
+        "update_emergency_contact": {
+            "description": "Updates the name and/or email address of an existing emergency contact. Changes may immediately alter where emergency alerts are delivered.",
+            "fields": {
+                "config_entry": {
+                    "description": "The Flume config entry to use.",
+                    "name": "Flume account"
+                },
+                "contact_name": {
+                    "description": "Updated name shown for the emergency contact.",
+                    "name": "Contact name"
+                },
+                "email_address": {
+                    "description": "Updated email address that should receive emergency alerts.",
+                    "name": "Email address"
+                },
+                "subscription_id": {
+                    "description": "The emergency-contact subscription ID returned by List emergency contacts.",
+                    "name": "Subscription ID"
+                }
+            },
+            "name": "Update emergency contact"
+        },
+        "update_notification_preferences": {
+            "description": "Enables or disables one named notification preference on an existing EMAIL or iOS channel. Only the selected known preference bit is changed; unknown bits reported by Flume are preserved.",
+            "fields": {
+                "config_entry": {
+                    "description": "The Flume config entry to use.",
+                    "name": "Flume account"
+                },
+                "enabled": {
+                    "description": "Whether the selected notification preference should be enabled for this channel.",
+                    "name": "Enabled"
+                },
+                "preference": {
+                    "description": "The named notification preference to change: Usage alerts, Budget, General, Connection, Battery, or Device moved.",
+                    "name": "Preference"
+                },
+                "subscription_id": {
+                    "description": "The notification subscription ID returned by Get notification preferences.",
+                    "name": "Subscription ID"
+                }
+            },
+            "name": "Update notification preferences"
+        },
+        "update_usage_alert_rule": {
+            "description": "Updates a Flume usage-alert rule using typed fields. Portal authentication is required. Smart Leak rules have portal restrictions and should not be edited as ordinary rules.",
+            "fields": {
+                "active": {
+                    "description": "Whether the usage-alert rule is enabled.",
+                    "name": "Active"
+                },
+                "device": {
+                    "description": "The Flume water sensor to use.",
+                    "name": "Water sensor"
+                },
+                "duration": {
+                    "description": "How many minutes the flow must continue before the rule triggers, from 5 through 1439 minutes.",
+                    "name": "Duration"
+                },
+                "flow_rate": {
+                    "description": "Flow-rate threshold in gallons per minute, from 0 through 40.9.",
+                    "name": "Flow rate"
+                },
+                "name": {
+                    "description": "A readable name from 1 to 32 characters.",
+                    "name": "Name"
+                },
+                "notify_every": {
+                    "description": "Minutes between repeat notifications. Flume requires this to be at least twice the rule duration.",
+                    "name": "Notify every"
+                },
+                "payload": {
+                    "description": "Optional raw compatibility payload. Prefer the typed fields in this action.",
+                    "name": "Legacy payload"
+                },
+                "rule_id": {
+                    "description": "The usage-alert rule ID returned by List usage-alert rules.",
+                    "name": "Rule ID"
+                }
+            },
+            "name": "Update usage-alert rule"
+        }
+    }
+}

@@ -1,0 +1,119 @@
+{
+  "entity": {
+    "binary_sensor": {
+      "flow": {
+        "default": "mdi:waves"
+      },
+      "leak": {
+        "default": "mdi:pipe-leak"
+      }
+    }
+  },
+  "services": {
+    "list_notifications": {
+      "service": "mdi:bell"
+    },
+    "list_usage_alert_rules": {
+      "service": "mdi:water-alert"
+    },
+    "create_usage_alert_rule": {
+      "service": "mdi:water-alert"
+    },
+    "update_usage_alert_rule": {
+      "service": "mdi:pencil"
+    },
+    "delete_usage_alert_rule": {
+      "service": "mdi:delete"
+    },
+    "set_usage_alert_rule_active": {
+      "service": "mdi:toggle-switch"
+    },
+    "list_usage_alert_history": {
+      "service": "mdi:history"
+    },
+    "list_do_not_alert_schedules": {
+      "service": "mdi:calendar"
+    },
+    "create_do_not_alert_schedule": {
+      "service": "mdi:calendar-plus"
+    },
+    "update_do_not_alert_schedule": {
+      "service": "mdi:calendar-edit"
+    },
+    "delete_do_not_alert_schedule": {
+      "service": "mdi:calendar-remove"
+    },
+    "get_usage_breakdown": {
+      "service": "mdi:chart-pie"
+    },
+    "list_budgets": {
+      "service": "mdi:format-list-bulleted"
+    },
+    "create_budget": {
+      "service": "mdi:plus"
+    },
+    "update_budget": {
+      "service": "mdi:pencil"
+    },
+    "delete_budget": {
+      "service": "mdi:delete"
+    },
+    "get_notification_preferences": {
+      "service": "mdi:bell"
+    },
+    "update_notification_preferences": {
+      "service": "mdi:bell"
+    },
+    "list_usage_spans": {
+      "service": "mdi:timeline-text-outline"
+    },
+    "relabel_span": {
+      "service": "mdi:tag"
+    },
+    "list_location_access": {
+      "service": "mdi:account-multiple"
+    },
+    "grant_location_access": {
+      "service": "mdi:account-plus"
+    },
+    "revoke_location_access": {
+      "service": "mdi:account-minus"
+    },
+    "list_subscriptions": {
+      "service": "mdi:bell"
+    },
+    "list_emergency_contacts": {
+      "service": "mdi:account-alert"
+    },
+    "create_emergency_contact": {
+      "service": "mdi:account-plus"
+    },
+    "update_emergency_contact": {
+      "service": "mdi:pencil"
+    },
+    "delete_emergency_contact": {
+      "service": "mdi:account-minus"
+    },
+    "get_meter_accuracy": {
+      "service": "mdi:speedometer"
+    },
+    "check_meter_accuracy": {
+      "service": "mdi:magnify"
+    },
+    "get_location_diagnostics": {
+      "service": "mdi:map-marker"
+    },
+    "set_notification_read": {
+      "service": "mdi:email-mark-as-unread"
+    },
+    "delete_notification": {
+      "service": "mdi:bell-remove"
+    },
+    "list_api_methods": {
+      "service": "mdi:format-list-bulleted"
+    },
+    "call_api": {
+      "service": "mdi:api"
+    }
+  }
+}
