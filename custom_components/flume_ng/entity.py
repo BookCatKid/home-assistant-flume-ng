@@ -56,7 +56,7 @@ class FlumeEntity[
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self.device_id)},
             manufacturer="Flume, Inc.",
-            model=device.product or "Flume Smart Water Monitor",
+            model="Flume Smart Water Monitor",
             name=f"{name} {device.location.name}",
             configuration_url="https://portal.flumewater.com",
         )
