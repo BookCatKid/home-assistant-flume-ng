@@ -31,18 +31,27 @@ Flume NG uses the separate `flume_ng` domain, so it can be installed alongside H
 
 The integration installs [PyFlumeNG](https://github.com/BookCatKid/PyFlumeNG) from PyPI automatically.
 
-## Install with HACS
+## Installation
 
-Until/unless this repository is added to the HACS default catalog, add it as a custom repository:
+### Home Assistant 2026.11 or newer
 
-1. Open **HACS** in Home Assistant.
-2. Open the HACS menu and choose **Custom repositories**.
-3. Add `https://github.com/BookCatKid/home-assistant-flume-ng` as an **Integration** repository.
-4. Install **Flume NG**.
-5. Restart Home Assistant.
-6. Go to **Settings → Devices & services → Add integration** and search for **Flume NG**.
+1. Open **Settings → Marketplace** and search for **Flume NG**.
+2. If it isn't listed, select **Add from link**, enter `https://github.com/BookCatKid/home-assistant-flume-ng`, and select **Add**. Connect GitHub if prompted.
+3. Open **Flume NG** in the Marketplace and select **Install**. Restart Home Assistant if prompted.
 
-If you previously copied `custom_components/flume_ng` into your configuration manually, remove/replace that manual copy before letting HACS manage the integration. Your Home Assistant config entry is stored separately from the integration files and should remain available.
+If you installed Flume NG through HACS before upgrading to 2026.11, the Marketplace imports it automatically. You don't need to reinstall it.
+
+### Home Assistant 2026.8 through 2026.10
+
+1. Open **HACS** and select **Custom repositories** from the menu.
+2. Add `https://github.com/BookCatKid/home-assistant-flume-ng` as an **Integration** repository.
+3. Install **Flume NG** and restart Home Assistant.
+
+### Set up Flume NG
+
+Go to **Settings → Devices & services → Add integration**, search for **Flume NG**, and follow the prompts.
+
+If you installed Flume NG manually, remove the manually copied `custom_components/flume_ng` folder before installing it through Marketplace or HACS. Leave the integration entry in **Devices & services** in place to keep your configuration.
 
 ## Authentication modes
 
