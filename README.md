@@ -35,23 +35,21 @@ The integration installs [PyFlumeNG](https://github.com/BookCatKid/PyFlumeNG) fr
 
 ### Home Assistant 2026.11 or newer
 
-1. Open **Settings → Marketplace** and search for **Flume NG**.
-2. If it isn't listed, select **Add from link**, enter `https://github.com/BookCatKid/home-assistant-flume-ng`, and select **Add**. Connect GitHub if prompted.
-3. Open **Flume NG** in the Marketplace and select **Install**. Restart Home Assistant if prompted.
+1. As a Home Assistant administrator, open **Settings → Marketplace → Browse**. On the first visit, read the community-content warning. If you accept it, select **I understand the risks and agree**, then **Continue**.
+2. Search for **Flume NG**. If it is not listed, select **Add from link** in the toolbar (the link-plus icon on narrow screens). Paste `https://github.com/BookCatKid/home-assistant-flume-ng` into **GitHub link** and select **Add**. If GitHub is not connected, Home Assistant asks you to connect it before adding the repository. If asked for a **Type**, choose **Integration**.
+3. Open the **Flume NG** result, select **Install**, then select **Install** again in the confirmation dialog.
+4. Follow the Flume NG setup dialog that opens after installation. If Home Assistant requires a restart, restart it first. If the setup dialog does not open, go to **Settings → Devices & services → Add integration** and select **Flume NG**.
 
-If you installed Flume NG through HACS before upgrading to 2026.11, the Marketplace imports it automatically. You don't need to reinstall it.
+Existing HACS installs of Flume NG migrate to Marketplace when you upgrade. You do not need to reinstall.
 
 ### Home Assistant 2026.8 through 2026.10
 
 1. Open **HACS** and select **Custom repositories** from the menu.
 2. Add `https://github.com/BookCatKid/home-assistant-flume-ng` as an **Integration** repository.
 3. Install **Flume NG** and restart Home Assistant.
+4. Go to **Settings → Devices & services → Add integration** and select **Flume NG**.
 
-### Set up Flume NG
-
-Go to **Settings → Devices & services → Add integration**, search for **Flume NG**, and follow the prompts.
-
-If you installed Flume NG manually, remove the manually copied `custom_components/flume_ng` folder before installing it through Marketplace or HACS. Leave the integration entry in **Devices & services** in place to keep your configuration.
+If you previously installed Flume NG by copying `custom_components/flume_ng`, remove that manually copied folder before installing through Marketplace or HACS. Leave the integration entry in **Devices & services** in place to keep your configuration.
 
 ## Authentication modes
 
