@@ -1728,7 +1728,8 @@ def async_setup_services(hass: HomeAssistant) -> None:  # noqa: C901
         schema=LIST_USAGE_SPANS_SERVICE_SCHEMA,
         supports_response=SupportsResponse.ONLY,
     )
-    hass.services.async_register(
+    service.async_register_admin_service(
+        hass,
         DOMAIN,
         SERVICE_LIST_LOCATION_ACCESS,
         list_location_access,
@@ -1763,7 +1764,8 @@ def async_setup_services(hass: HomeAssistant) -> None:  # noqa: C901
         schema=CHECK_METER_ACCURACY_SERVICE_SCHEMA,
         supports_response=SupportsResponse.ONLY,
     )
-    hass.services.async_register(
+    service.async_register_admin_service(
+        hass,
         DOMAIN,
         SERVICE_GET_LOCATION_DIAGNOSTICS,
         get_location_diagnostics,
