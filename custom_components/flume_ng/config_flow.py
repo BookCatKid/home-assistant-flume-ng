@@ -19,6 +19,11 @@ from homeassistant.const import (
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers.selector import (
+    TextSelector,
+    TextSelectorConfig,
+    TextSelectorType,
+)
 
 from .const import (
     AUTH_TYPE_PERSONAL,
@@ -44,16 +49,22 @@ AUTH_TYPE_SCHEMA = vol.Schema(
 PORTAL_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_USERNAME): str,
-        vol.Required(CONF_PASSWORD): str,
+        vol.Required(CONF_PASSWORD): TextSelector(
+            TextSelectorConfig(type=TextSelectorType.PASSWORD)
+        ),
     }
 )
 
 PERSONAL_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_USERNAME): str,
-        vol.Required(CONF_PASSWORD): str,
+        vol.Required(CONF_PASSWORD): TextSelector(
+            TextSelectorConfig(type=TextSelectorType.PASSWORD)
+        ),
         vol.Required(CONF_CLIENT_ID): str,
-        vol.Required(CONF_CLIENT_SECRET): str,
+        vol.Required(CONF_CLIENT_SECRET): TextSelector(
+            TextSelectorConfig(type=TextSelectorType.PASSWORD)
+        ),
     }
 )
 
@@ -207,19 +218,26 @@ class FlumeConfigFlow(ConfigFlow, domain=DOMAIN):
         if auth_type == AUTH_TYPE_PERSONAL:
             schema = vol.Schema(
                 {
-                    vol.Required(CONF_PASSWORD): str,
+                    vol.Required(CONF_PASSWORD): TextSelector(
+                        TextSelectorConfig(type=TextSelectorType.PASSWORD)
+                    ),
                     vol.Required(
                         CONF_CLIENT_ID,
                         default=existing_entry.data.get(CONF_CLIENT_ID, ""),
                     ): str,
-                    vol.Required(
-                        CONF_CLIENT_SECRET,
-                        default=existing_entry.data.get(CONF_CLIENT_SECRET, ""),
-                    ): str,
+                    vol.Required(CONF_CLIENT_SECRET): TextSelector(
+                        TextSelectorConfig(type=TextSelectorType.PASSWORD)
+                    ),
                 }
             )
         else:
-            schema = vol.Schema({vol.Required(CONF_PASSWORD): str})
+            schema = vol.Schema(
+                {
+                    vol.Required(CONF_PASSWORD): TextSelector(
+                        TextSelectorConfig(type=TextSelectorType.PASSWORD)
+                    )
+                }
+            )
 
         if user_input is not None:
             new_data = {

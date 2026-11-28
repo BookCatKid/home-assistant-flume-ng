@@ -102,6 +102,8 @@ Flume NG exposes Home Assistant actions for the operations that do not map clean
 - Reading meter-accuracy and location-profile diagnostics.
 - Listing the allowlisted read-only expert API surface.
 
+Listing shared location access, reading location-profile diagnostics, listing notification subscriptions, and listing emergency contacts require administrator privileges.
+
 The normal actions use typed Home Assistant fields wherever practical. The expert API action intentionally blocks write/credential operations and recursively redacts sensitive response fields.
 
 ## Notification events

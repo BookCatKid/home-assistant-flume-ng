@@ -1736,14 +1736,17 @@ def async_setup_services(hass: HomeAssistant) -> None:  # noqa: C901
         schema=LIST_LOCATION_ACCESS_SERVICE_SCHEMA,
         supports_response=SupportsResponse.ONLY,
     )
-    hass.services.async_register(
+    # Subscription records also contain emergency-contact names.
+    service.async_register_admin_service(
+        hass,
         DOMAIN,
         SERVICE_LIST_SUBSCRIPTIONS,
         list_subscriptions,
         schema=LIST_SUBSCRIPTIONS_SERVICE_SCHEMA,
         supports_response=SupportsResponse.ONLY,
     )
-    hass.services.async_register(
+    service.async_register_admin_service(
+        hass,
         DOMAIN,
         SERVICE_LIST_EMERGENCY_CONTACTS,
         list_emergency_contacts,
